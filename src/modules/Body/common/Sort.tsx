@@ -31,6 +31,10 @@ function Sort({ setSort, disabled }: Props) {
 
 const Wrapper = styled.div`
     font-size: 14px;
+
+    @media screen and (max-width: 960px) {
+        font-size: 18px;
+    }
 `
 
 export default Sort

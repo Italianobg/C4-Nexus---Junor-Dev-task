@@ -1,23 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import Notification from '../common/Notification'
+import { FaTimes } from 'react-icons/fa';
+import { CgMenuRight } from 'react-icons/cg';
+import { IconContext } from 'react-icons';
 
 type Props = {}
 
 function Header({ }: Props) {
+
+    const [show, setShow] = useState(false);
+
+    const handleClick = () => {
+        setShow(!show);
+    };
+
     return (
         <Wrapper>
-            <Notification />
-            <Container>
-                <Logo><img src="https://i0.wp.com/frichicfactory.com/wp-content/uploads/2021/01/cropped-frichicfactory_logo2_0121.png?w=1028&ssl=1" alt="Logo" /></Logo>
-                <Nav>
-                    <Link to="kids">For Kids</Link>
-                    <Link to="holidays">Holidays</Link>
-                    <Link to="occasions">Occasions</Link>
-                    <Link to="others">Others</Link>
-                </Nav>
-            </Container>
+            <IconContext.Provider value={{ color: '#000000' }}>
+                <Notification />
+                <Container>
+                    <Logo to="/"><img src="https://i0.wp.com/frichicfactory.com/wp-content/uploads/2021/01/cropped-frichicfactory_logo2_0121.png?w=1028&ssl=1" alt="Logo" /></Logo>
+                    <MobileIcon onClick={handleClick}>
+                        {show ? <FaTimes /> : <CgMenuRight />}
+                    </MobileIcon>
+                    <Nav show={show}>
+                        <Link to="kids" onClick={handleClick}>For Kids</Link>
+                        <Link to="holidays" onClick={handleClick}>Holidays</Link>
+                        <Link to="occasions" onClick={handleClick}>Occasions</Link>
+                        <Link to="others" onClick={handleClick}>Others</Link>
+                    </Nav>
+                </Container>
+            </IconContext.Provider>
         </Wrapper>
     )
 }
@@ -36,17 +51,46 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @media screen and (max-width: 960px) {
+        width: 90%;
+    }
 `
 
-const Logo = styled.div`
+const Logo = styled(NavLink)`
     img{
         max-width: 230px;
         height: auto;
         }
 `
 
-const Nav = styled.div`
+const MobileIcon = styled.div`
+    font-size: 28px;
+    display: none;
 
+    @media screen and (max-width: 960px) {
+        display: block;
+    }
+`
+
+const Nav = styled.div<{ show: boolean }>`
+    display: flex;
+
+    @media screen and (max-width: 960px) {
+		flex-direction: column;
+		width: 100%;
+		position: fixed;
+		margin-top: 75px;
+        padding-left: 10%;
+        padding-right: 25%;
+		top: 0;
+		left: 0;
+		opacity: ${({ show }) => (show ? 1 : 0)};
+		visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+		transform: translateY(${({ show }) => (show ? '0' : '-10px')});
+		transition: opacity 0.5s ease;
+		background-color: #f0f0f0;
+	}
 `
 
 const Link = styled(NavLink)`

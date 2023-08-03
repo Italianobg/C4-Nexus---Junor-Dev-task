@@ -28,6 +28,8 @@ function Notification({ }: Props) {
 
 const Wrapper = styled.div`
     background-color: #8ccca7;
+    text-align: center;
+    padding: 5px 10px;
     border-radius: 7px;
     z-index: 999;
     position: absolute;
@@ -37,11 +39,15 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: black;
+
+    @media screen and (max-width: 960px) {
+            width: 80%;
+            font-size: 18px;
+        }
 `
 
 export default Notification

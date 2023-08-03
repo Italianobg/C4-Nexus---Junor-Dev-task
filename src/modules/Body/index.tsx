@@ -7,6 +7,7 @@ import Holidays from './modules/Holidays'
 import Occasions from './modules/Occasions'
 import Others from './modules/Others'
 import Home from './modules/Home'
+import { IconContext } from 'react-icons'
 
 type Props = {}
 
@@ -48,14 +49,16 @@ function Body({ }: Props) {
 
     return (
         <Wrapper>
-            <Routes>
-                <Route path="*" element={<NotFound />} ></Route>
-                <Route path="/" element={<Home />} ></Route>
-                <Route path="kids" element={<Kids products={products} />} ></Route>
-                <Route path="holidays" element={<Holidays products={products} />} ></Route>
-                <Route path="occasions" element={<Occasions products={products} />} ></Route>
-                <Route path="others" element={<Others products={products} />} ></Route>
-            </Routes>
+            <IconContext.Provider value={{ color: '#000000' }}>
+                <Routes>
+                    <Route path="*" element={<NotFound />} ></Route>
+                    <Route path="/" element={<Home />} ></Route>
+                    <Route path="kids" element={<Kids products={products} />} ></Route>
+                    <Route path="holidays" element={<Holidays products={products} />} ></Route>
+                    <Route path="occasions" element={<Occasions products={products} />} ></Route>
+                    <Route path="others" element={<Others products={products} />} ></Route>
+                </Routes>
+            </IconContext.Provider>
         </Wrapper>
     )
 }

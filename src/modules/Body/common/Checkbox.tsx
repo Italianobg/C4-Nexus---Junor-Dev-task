@@ -22,6 +22,10 @@ const Wrapper = styled.label`
     padding-left: 7px;
     display: flex;
 
+    @media screen and (max-width: 960px) {
+            font-size: 18px;
+        }
+
     input{
         margin-right: 5px;
     }

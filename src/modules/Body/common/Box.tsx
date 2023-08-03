@@ -51,6 +51,15 @@ const Wrapper = styled.div`
     border-radius: 5px;
     margin: 0.5%;
     justify-content: space-between;
+
+    @media screen and (max-width: 960px) {
+        align-self: center;
+        width: 49%;
+    }
+    @media screen and (max-width: 600px) {
+        align-self: center;
+        width: 80%;
+    }
 `
 
 const Name = styled.div`

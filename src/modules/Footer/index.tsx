@@ -49,6 +49,18 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
+    @media screen and (max-width: 960px) {
+        flex-direction: column;
+        align-items: center;
+
+        div{
+            margin: 15px 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
 `
 
 const LinkStyle = styled(Link)`

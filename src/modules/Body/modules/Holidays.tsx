@@ -7,6 +7,8 @@ import { styled } from 'styled-components';
 import Sort from '../common/Sort';
 import titles from '../../../titles';
 import { Helmet } from 'react-helmet-async';
+import { Content, Grid, LoadMore, Loading, Mobile, PageInfo, ProductsGrid, ShowFilter, Top, Wrapper } from '../styles/common'
+import { FaFilter } from 'react-icons/fa';
 
 type Props = {
     products: Array<Product>,
@@ -16,6 +18,7 @@ function Holidays({ products }: Props) {
     const [loading, setLoading] = useState<boolean>(true);
     const [catProducts, setCatProducts] = useState<any>([]);
     const [sort, setSort] = useState<string>('a-z');
+    const [showFilter, setShowFilter] = useState(false);
 
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [index, setIndex] = useState<number>(8);
@@ -90,6 +93,10 @@ function Holidays({ products }: Props) {
         setFilteredProducts([...arr]);
     }
 
+    const setShowHandler = (value: boolean) => {
+        setShowFilter(value);
+    }
+
 
     return (
         <Wrapper>
@@ -97,11 +104,14 @@ function Holidays({ products }: Props) {
                 <title>{titles.holidays.title}</title>
                 <meta name='description' content={titles.holidays.description} />
             </Helmet>
-            <Filter products={catProducts} setDisplayProducts={setDisplayProductsHandler} />
+            <Filter products={catProducts} setDisplayProducts={setDisplayProductsHandler} show={showFilter} setShow={setShowHandler} />
             <Content>
                 <Top>
                     <Title title="Holidays" description="Cookie Cutters For Holidays"></Title>
-                    <Sort setSort={setSortHandler} disabled={loading} />
+                    <Mobile>
+                        <ShowFilter onClick={() => { setShowFilter(true) }}><FaFilter /> Open Filter</ShowFilter>
+                        <Sort setSort={setSortHandler} disabled={loading} />
+                    </Mobile>
                 </Top>
                 {loading ? <Loading>Loading</Loading> :
                     <ProductsGrid>
@@ -120,55 +130,5 @@ function Holidays({ products }: Props) {
         </Wrapper >
     )
 }
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-`
-const Content = styled.div`
-    margin-left: 20px;
-    width: 82%;
-    display: flex;
-    flex-direction: column;
-`
-const Top = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-`
-const ProductsGrid = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-`
-const Grid = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 20px 0px;
-`
-const PageInfo = styled.div`
-    justify-content: center;
-    margin-bottom: 10px;
-    font-size: 14px;
-    text-align: center;
-`
-const Loading = styled.div`
-    text-align: center;
-`
-const LoadMore = styled.button`
-    margin-bottom: 20px;
-    font-size: 16px;
-    padding: 4px 10px;
-    background-color: #d6e0f0;
-    border-radius: 4px;
-
-    &:hover{
-        background-color: #d2def3;
-        color: black;
-    }
-`
 
 export default Holidays

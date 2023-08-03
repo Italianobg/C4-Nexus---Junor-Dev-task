@@ -5,14 +5,16 @@ import Checkbox from './Checkbox';
 import { removeFromArray } from '../utils/global';
 import { RangeSlider } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import { FaTimes } from 'react-icons/fa';
 
 type Props = {
     products: Array<Product>,
     setDisplayProducts: Function,
+    show: boolean;
+    setShow: Function;
 }
 
-function Filter({ products, setDisplayProducts }: Props) {
-
+function Filter({ products, setDisplayProducts, show, setShow }: Props) {
     const [types, setTypes] = useState<Array<string>>([]);
     const [sizes, setSizes] = useState<Array<string>>([]);
 
@@ -95,10 +97,16 @@ function Filter({ products, setDisplayProducts }: Props) {
         setDisplayProducts(filteredProducts);
     }, [filteredProducts])
 
+    const closeFilter = () => {
+        setShow(!show);
+    }
 
     return (
-        <Wrapper>
-            <h3>Filters</h3>
+        <Wrapper show={show}>
+            <Header>
+                <h3>Filters</h3>
+                <CloseIcon onClick={closeFilter} />
+            </Header>
             <h5>Type</h5>
             {types ? types.map((type) => { return <Checkbox label={type} key={type} value={typesFiltered.includes(type)} onChange={(e) => typeFilterHander(e)} ></Checkbox> }) : ''}
             <h5>Size</h5>
@@ -113,15 +121,52 @@ function Filter({ products, setDisplayProducts }: Props) {
     )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ show: boolean }>`
     width: 18%;
     p{
         font-size: 14px;
     }
     h5{
         margin: 8px 0px;
+
+        @media screen and (max-width: 960px) {
+            font-size: 22px;
+        }
     }
+
+    @media screen and (max-width: 960px) {
+		flex-direction: column;
+		width: 100%;
+		position: fixed;
+		margin-top: 75px;
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-bottom: 25px;
+		top: 0;
+		left: 0;
+		opacity: ${({ show }) => (show ? 1 : 0)};
+		visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+		transform: translateY(${({ show }) => (show ? '0' : '-10px')});
+		transition: opacity 0.5s ease;
+		background-color: #f0f0f0;
+
+	}
     `
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const CloseIcon = styled(FaTimes)`
+    font-size: 28px;
+    display: none;
+
+    @media screen and (max-width: 960px) {
+        display: block;
+        }
+`
 
 const MinMaxPrice = styled.div`
     display: flex;
@@ -129,6 +174,10 @@ const MinMaxPrice = styled.div`
 
     p{
         font-size: 14px;
+
+        @media screen and (max-width: 960px) {
+            font-size: 18px;
+        }
     }
 `
 
