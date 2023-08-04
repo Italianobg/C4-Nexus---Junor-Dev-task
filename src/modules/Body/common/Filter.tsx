@@ -6,6 +6,7 @@ import { removeFromArray } from '../utils/global';
 import { RangeSlider } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import { FaTimes } from 'react-icons/fa';
+import { LoadMore } from '../styles/common';
 
 type Props = {
     products: Array<Product>,
@@ -117,6 +118,8 @@ function Filter({ products, setDisplayProducts, show, setShow }: Props) {
                 <p>{minPrice}</p>
                 <p>{maxPrice}</p>
             </MinMaxPrice>
+            <div><Button show={show} onClick={closeFilter}>Apply</Button>
+            </div>
         </Wrapper>
     )
 }
@@ -171,6 +174,7 @@ const CloseIcon = styled(FaTimes)`
 const MinMaxPrice = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 
     p{
         font-size: 14px;
@@ -183,6 +187,11 @@ const MinMaxPrice = styled.div`
 
 const PriceRange = styled(RangeSlider)`
     z-index: 0;
-    `
+`
 
+const Button = styled(LoadMore) <{ show: boolean }>`
+    width: 100%;
+    opacity: ${({ show }) => (show ? 1 : 0)};
+	visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+`
 export default Filter

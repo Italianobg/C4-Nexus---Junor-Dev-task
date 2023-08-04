@@ -21,11 +21,11 @@ const rating = (value: number) => {
 function Box({ value }: Props) {
 
     const { text, setTextData } = useContext(NotificationContext);
-    const { setIDsData } = useContext(CartContext);
+    const { cart, setCartData } = useContext(CartContext);
 
     function addToCartHandler(value: Product): void {
         setTextData(`${value.name} added to cart!`);
-        setIDsData(value.ID);
+        setCartData([...cart, value.ID]);
     }
 
     return (
@@ -33,6 +33,7 @@ function Box({ value }: Props) {
             <Name>{value.name}</Name>
             <Image><img src={value.image.split(",")[0]} alt="product image" /></Image>
             <Description>{value.description}</Description>
+            <Size>Size: {value.attr1_values}cm</Size>
             <Price>{value.price.toFixed(2)} BGN</Price>
             <Rating>{rating(value.rating).map((el) => { return el })}</Rating>
             <AddToCart onClick={() => { addToCartHandler(value) }}>Add to cart</AddToCart>
@@ -84,6 +85,10 @@ const Description = styled.div`
     margin: 6px;
     font-size: 13px;
     text-align: center;
+`
+
+const Size = styled.div`
+    font-size: 12px;
 `
 
 const Price = styled.div`

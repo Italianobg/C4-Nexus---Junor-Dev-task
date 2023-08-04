@@ -1,13 +1,13 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
 interface CardItems {
-    IDs: Array<number>;
-    setIDsData(ID: number): void;
+    cart: Array<number>;
+    setCartData(ID: Array<number>): void;
 }
 
 export const CartContext = createContext<CardItems>({
-    IDs: [],
-    setIDsData: () => { },
+    cart: [],
+    setCartData: () => { },
 });
 
 
@@ -15,11 +15,13 @@ function CartContextProvider({ children }: { children: any }) {
 
     const [IDs, setIDs] = useState<Array<number>>([]);
 
-    const setIDsData = (ID: number) => { setIDs([...IDs, ID]) };
+    const setCartData = (IDs: Array<number>) => {
+        setIDs([...IDs])
+    };
 
     const contextValue = {
-        IDs: [],
-        setIDsData: useCallback((ID: number) => setIDsData(ID), []),
+        cart: IDs,
+        setCartData: useCallback((IDs: Array<number>) => setCartData(IDs), []),
     };
 
     return (

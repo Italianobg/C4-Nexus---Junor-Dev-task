@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import Notification from '../common/Notification'
 import { FaTimes } from 'react-icons/fa';
+import { FiShoppingCart } from 'react-icons/fi';
 import { CgMenuRight } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
+import { CartContext } from '../../provider/cart';
 
 type Props = {}
 
 function Header({ }: Props) {
 
     const [show, setShow] = useState(false);
+    const { cart } = useContext(CartContext);
+
 
     const handleClick = () => {
         setShow(!show);
@@ -22,15 +26,21 @@ function Header({ }: Props) {
                 <Notification />
                 <Container>
                     <Logo to="/"><img src="https://i0.wp.com/frichicfactory.com/wp-content/uploads/2021/01/cropped-frichicfactory_logo2_0121.png?w=1028&ssl=1" alt="Logo" /></Logo>
-                    <MobileIcon onClick={handleClick}>
-                        {show ? <FaTimes /> : <CgMenuRight />}
-                    </MobileIcon>
-                    <Nav show={show}>
-                        <Link to="kids" onClick={handleClick}>For Kids</Link>
-                        <Link to="holidays" onClick={handleClick}>Holidays</Link>
-                        <Link to="occasions" onClick={handleClick}>Occasions</Link>
-                        <Link to="others" onClick={handleClick}>Others</Link>
-                    </Nav>
+                    <RightNav>
+                        <MobileIcon onClick={handleClick}>
+                            {show ? <FaTimes /> : <CgMenuRight />}
+                        </MobileIcon>
+                        <Nav show={show}>
+                            <Link to="kids" onClick={handleClick}>For Kids</Link>
+                            <Link to="holidays" onClick={handleClick}>Holidays</Link>
+                            <Link to="occasions" onClick={handleClick}>Occasions</Link>
+                            <Link to="others" onClick={handleClick}>Others</Link>
+                        </Nav>
+                        <Cart>
+                            <FiShoppingCart />
+                            {cart.length > 0 ? <NumberItems>{cart.length}</NumberItems> : ''}
+                        </Cart>
+                    </RightNav>
                 </Container>
             </IconContext.Provider>
         </Wrapper>
@@ -75,6 +85,7 @@ const MobileIcon = styled.div`
 
 const Nav = styled.div<{ show: boolean }>`
     display: flex;
+    align-items: baseline;
 
     @media screen and (max-width: 960px) {
 		flex-direction: column;
@@ -91,6 +102,31 @@ const Nav = styled.div<{ show: boolean }>`
 		transition: opacity 0.5s ease;
 		background-color: #f0f0f0;
 	}
+`
+const RightNav = styled.div`
+    display: flex;
+`
+
+const Cart = styled.div`
+    font-size: 23px;
+    padding: 5px 10px;
+    position: relative;
+`
+
+const NumberItems = styled.div`
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: black;
+    background-color: #d6e0f0;
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 `
 
 const Link = styled(NavLink)`
