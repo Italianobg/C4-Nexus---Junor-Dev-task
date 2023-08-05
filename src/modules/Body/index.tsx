@@ -21,6 +21,7 @@ export interface Product {
     attr1: string;
     attr1_values: number;
     rating: number;
+    discount: number;
 }
 
 function Body({ }: Props) {

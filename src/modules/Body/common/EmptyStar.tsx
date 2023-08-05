@@ -13,6 +13,7 @@ function EmptyStar({ }: Props) {
 
 const Wrapper = styled.span`
     width: 20%;
+    max-width: 19px;
     height: auto;
 
     img{
