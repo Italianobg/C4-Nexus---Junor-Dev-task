@@ -10,7 +10,7 @@ The main technology that has been used is ReactJS with TypeScript and the follow
  React-Icons <br/>
  Firebase-Tools<br/>
 <br/>
-All assigned tasks have been implemented plus additional "Cart" functionality /not fully implemented/.
+All assigned tasks have been implemented plus additional "Cart" functionality /CartCotext storing the IDs of the products that were added to the cart/.
 <br/>
 ### Used Technologies 
 ReactJS - main technology<br/>
